@@ -8,7 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Three.js for 3D Rainbow Particle Effect -->
+    <!-- Three.js for Starfield Effect -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <style>
         body {
@@ -40,7 +40,7 @@
 </head>
 <body class="min-h-screen flex flex-col">
 
-    <!-- 3D Twinkling Rainbow Glitter Canvas Background -->
+    <!-- 3D Twinkling Starfield Canvas Background -->
     <div id="canvas-container"></div>
 
     <div class="app-content flex-grow flex flex-col">
@@ -70,6 +70,45 @@
 
         <!-- Main Dashboard Container -->
         <main class="max-w-7xl mx-auto px-4 py-8 flex-grow w-full space-y-6">
+
+            <!-- SIH Problem Statement & Architecture Features Explanation Interface -->
+            <div class="glass-card p-6 rounded-2xl border-l-4 border-l-blue-500 space-y-4">
+                <div class="flex items-center justify-between border-b border-gray-800/80 pb-3">
+                    <div class="flex items-center gap-2">
+                        <i class="fa-solid fa-microchip text-blue-400 text-lg"></i>
+                        <h2 class="text-sm font-bold uppercase tracking-wider text-white">SIH Feature Matrix & Technical Architecture</h2>
+                    </div>
+                    <span class="text-[10px] bg-blue-900/50 text-blue-300 px-2 py-0.5 rounded font-mono border border-blue-700/50">
+                        Smart India Hackathon 2026 Core Requirements
+                    </span>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+                    <div class="p-3 bg-gray-900/50 rounded-xl border border-gray-800/80">
+                        <p class="font-bold text-blue-400 mb-1 flex items-center gap-1.5">
+                            <i class="fa-solid fa-magnifying-glass-location"></i> Multi-Platform OSINT Harvesting
+                        </p>
+                        <p class="text-gray-400 leading-relaxed">
+                            Harvests real-time public feeds, comments, and post signatures across Reddit, YouTube, X, Instagram, and Telegram via direct API bridges and CORS fallback proxies.
+                        </p>
+                    </div>
+                    <div class="p-3 bg-gray-900/50 rounded-xl border border-gray-800/80">
+                        <p class="font-bold text-emerald-400 mb-1 flex items-center gap-1.5">
+                            <i class="fa-solid fa-brain"></i> NLP Sentiment & Keyword Lexicon
+                        </p>
+                        <p class="text-gray-400 leading-relaxed">
+                            Parses unstructured post content to calculate a normalized threat score (0-100), categorizing engagement into Positive, Neutral, or Security Warning levels.
+                        </p>
+                    </div>
+                    <div class="p-3 bg-gray-900/50 rounded-xl border border-gray-800/80">
+                        <p class="font-bold text-red-400 mb-1 flex items-center gap-1.5">
+                            <i class="fa-solid fa-triangle-exclamation"></i> Threat Diagnostic Engine
+                        </p>
+                        <p class="text-gray-400 leading-relaxed">
+                            Evaluates suspicious patterns, flags potential security threats or malicious propagation, and automatically updates risk indicators for law enforcement/analysts.
+                        </p>
+                    </div>
+                </div>
+            </div>
 
             <!-- Target Input Control Panel -->
             <div class="glass-card p-6 rounded-2xl">
@@ -206,9 +245,9 @@
     <!-- JavaScript Script -->
     <script>
         // ==========================================
-        // 1. THREE.JS 3D RAINBOW GLITTER PARTICLES
+        // 1. THREE.JS 3D TWINKLING STARFIELD BACKGROUND
         // ==========================================
-        function initRainbowGlitterBackground() {
+        function initStarfieldBackground() {
             const container = document.getElementById('canvas-container');
             const scene = new THREE.Scene();
             const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -219,7 +258,7 @@
             renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
             container.appendChild(renderer.domElement);
 
-            const count = 2000;
+            const count = 2500;
             const geometry = new THREE.BufferGeometry();
             const positions = new Float32Array(count * 3);
             const colors = new Float32Array(count * 3);
@@ -230,14 +269,22 @@
                 positions[i * 3 + 1] = (Math.random() - 0.5) * 1200;
                 positions[i * 3 + 2] = (Math.random() - 0.5) * 900;
 
-                // Vivid Rainbow Palette
+                // Classic white/blueish star tones
                 const color = new THREE.Color();
-                color.setHSL(Math.random(), 0.9, 0.65);
+                const starType = Math.random();
+                if (starType > 0.8) {
+                    color.setHex(0x93c5fd); // Light blue star
+                } else if (starType > 0.6) {
+                    color.setHex(0xe0e7ff); // Soft indigo star
+                } else {
+                    color.setHex(0xffffff); // Pure white star
+                }
+
                 colors[i * 3] = color.r;
                 colors[i * 3 + 1] = color.g;
                 colors[i * 3 + 2] = color.b;
 
-                sizes[i] = Math.random() * 3.5 + 1.2;
+                sizes[i] = Math.random() * 2.5 + 0.8;
             }
 
             geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
@@ -245,27 +292,27 @@
             geometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
 
             const material = new THREE.PointsMaterial({
-                size: 2.5,
+                size: 2.0,
                 vertexColors: true,
                 transparent: true,
-                opacity: 0.85,
+                opacity: 0.8,
                 blending: THREE.AdditiveBlending
             });
 
-            const particles = new THREE.Points(geometry, material);
-            scene.add(particles);
+            const stars = new THREE.Points(geometry, material);
+            scene.add(stars);
 
             function animate() {
                 requestAnimationFrame(animate);
-                particles.rotation.y += 0.0004;
-                particles.rotation.x += 0.0002;
+                stars.rotation.y += 0.0002;
+                stars.rotation.x += 0.0001;
 
-                const sizesArr = particles.geometry.attributes.size.array;
-                const time = Date.now() * 0.004;
+                const sizesArr = stars.geometry.attributes.size.array;
+                const time = Date.now() * 0.003;
                 for (let i = 0; i < count; i++) {
-                    sizesArr[i] = (Math.sin(time + i * 0.5) + 1.2) * 2;
+                    sizesArr[i] = (Math.sin(time + i * 0.3) + 1.2) * 1.5;
                 }
-                particles.geometry.attributes.size.needsUpdate = true;
+                stars.geometry.attributes.size.needsUpdate = true;
 
                 renderer.render(scene, camera);
             }
@@ -277,7 +324,7 @@
                 renderer.setSize(window.innerWidth, window.innerHeight);
             });
         }
-        initRainbowGlitterBackground();
+        initStarfieldBackground();
 
         // ==========================================
         // 2. DYNAMIC NLP SENTIMENT LEXICON
