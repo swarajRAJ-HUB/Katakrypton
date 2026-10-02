@@ -1,1 +1,274 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Katakrypton | AI Information Extraction & Verification</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Three.js CDN for 3D Graphics -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background-color: #030712;
+            color: #f3f4f6;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            overflow-x: hidden;
+        }
+        #webgl-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+        }
+        .glass-card {
+            background: rgba(17, 24, 39, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .glow-text {
+            text-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+        }
+    </style>
+</head>
+<body class="relative min-h-screen">
 
+    <!-- 3D WebGL Canvas Background -->
+    <div id="webgl-container"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 w-full z-50 glass-card border-b border-gray-800/50">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <div class="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center font-bold text-white shadow-lg shadow-blue-500/50">
+                    K
+                </div>
+                <span class="text-xl font-extrabold tracking-wider bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">KATAKRYPTON</span>
+            </div>
+            <div class="hidden md:flex space-x-8 text-sm font-medium text-gray-300">
+                <a href="#hero" class="hover:text-blue-400 transition-colors">Overview</a>
+                <a href="#architecture" class="hover:text-blue-400 transition-colors">Architecture</a>
+                <a href="#demo" class="hover:text-blue-400 transition-colors">Live Extraction Engine</a>
+            </div>
+            <a href="#demo" class="px-5 py-2.5 rounded-full bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold transition-all shadow-lg shadow-blue-600/30">
+                Launch System
+            </a>
+        </div>
+    </nav>
+
+    <!-- Content Wrapper -->
+    <main class="relative z-10 pt-24">
+
+        <!-- Hero Section -->
+        <section id="hero" class="min-h-[85vh] flex items-center justify-center px-6">
+            <div class="max-w-4xl mx-auto text-center space-y-8">
+                <div class="inline-flex items-center space-x-2 px-4 py-2 rounded-full glass-card border border-blue-500/30 text-blue-400 text-xs font-semibold tracking-wide uppercase">
+                    <span class="w-2 h-2 rounded-full bg-blue-400 animate-pulse"></span>
+                    <span>Smart India Hackathon Project Solution</span>
+                </div>
+                <h1 class="text-5xl md:text-7xl font-extrabold text-white tracking-tight leading-tight">
+                    Automated Extraction & <br/>
+                    <span class="bg-gradient-to-r from-blue-400 via-indigo-300 to-cyan-400 bg-clip-text text-transparent glow-text">Information Verification</span>
+                </h1>
+                <p class="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto font-normal">
+                    AI-driven OCR and layout-aware parser designed for semi-categorized datasets, legal documents, and multi-source structured validation.
+                </p>
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+                    <a href="#demo" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold shadow-xl shadow-blue-600/25 transition-all text-center">
+                        Try File Extraction
+                    </a>
+                    <a href="#architecture" class="w-full sm:w-auto px-8 py-4 rounded-xl glass-card hover:bg-gray-800/60 text-gray-300 font-semibold transition-all border border-gray-700 text-center">
+                        View Pipeline Specs
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pipeline Specs -->
+        <section id="architecture" class="py-20 px-6 max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-white">System Architecture</h2>
+                <p class="text-gray-400 mt-2">End-to-end data pipeline from document ingest to verification score.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="glass-card p-8 rounded-2xl hover:border-blue-500/50 transition-all">
+                    <div class="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/30 text-blue-400 flex items-center justify-center text-xl font-bold mb-6">
+                        <i class="fa-solid fa-file-arrow-up"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white mb-3">1. Layout-Aware Parsing</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Processes semi-structured PDFs, multi-column forms, and tables using layout-aware computer vision and specialized OCR filters.
+                    </p>
+                </div>
+                <div class="glass-card p-8 rounded-2xl hover:border-indigo-500/50 transition-all">
+                    <div class="w-12 h-12 rounded-xl bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 flex items-center justify-center text-xl font-bold mb-6">
+                        <i class="fa-solid fa-brain"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white mb-3">2. Schema Extraction</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Maps unstructured key-value text pairs automatically into normalized JSON objects with probabilistic confidence scores.
+                    </p>
+                </div>
+                <div class="glass-card p-8 rounded-2xl hover:border-cyan-500/50 transition-all">
+                    <div class="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 flex items-center justify-center text-xl font-bold mb-6">
+                        <i class="fa-solid fa-shield-check"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white mb-3">3. Verification Engine</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Cross-validates extracted metrics against pre-registered databases, checksum logic, and fuzzy string algorithms.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Extraction Demo -->
+        <section id="demo" class="py-20 px-6 max-w-6xl mx-auto">
+            <div class="glass-card p-8 md:p-12 rounded-3xl border border-gray-800 shadow-2xl">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+                    <div>
+                        <h2 class="text-2xl font-bold text-white">Live Document Processing Sandbox</h2>
+                        <p class="text-gray-400 text-sm mt-1">Upload semi-categorized files or click 'Process Sample Data' to simulate extraction.</p>
+                    </div>
+                    <button id="process-btn" onclick="runExtraction()" class="px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-medium text-sm transition-all flex items-center space-x-2 shadow-lg shadow-blue-600/30">
+                        <i class="fa-solid fa-bolt"></i>
+                        <span>Process Sample Data</span>
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <!-- Left: Upload / Source View -->
+                    <div class="flex flex-col h-full space-y-4">
+                        <label class="text-xs font-semibold uppercase text-gray-400 tracking-wider">Raw Input Source</label>
+                        <div class="flex-1 border-2 border-dashed border-gray-700 hover:border-blue-500/50 rounded-2xl p-6 flex flex-col items-center justify-center text-center bg-gray-900/40 transition-all cursor-pointer">
+                            <i class="fa-solid fa-cloud-arrow-up text-4xl text-gray-500 mb-3"></i>
+                            <p class="text-gray-300 font-medium text-sm">Drag & Drop Documents Here</p>
+                            <p class="text-gray-500 text-xs mt-1">Supports PDF, PNG, JPG (Max 25MB)</p>
+                        </div>
+                    </div>
+
+                    <!-- Right: Extracted Structured Output -->
+                    <div class="flex flex-col h-full space-y-4">
+                        <label class="text-xs font-semibold uppercase text-gray-400 tracking-wider">Extracted & Verified Output</label>
+                        <div class="flex-1 glass-card bg-gray-950/80 rounded-2xl p-6 font-mono text-xs text-blue-300 min-h-[220px] overflow-x-auto border border-gray-800 flex items-center justify-center" id="output-box">
+                            <span class="text-gray-500 font-sans">Click 'Process Sample Data' to view output...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="py-12 border-t border-gray-900 text-center text-xs text-gray-500">
+            <p>© 2026 Katakrypton AI. Built for Smart India Hackathon.</p>
+        </footer>
+
+    </main>
+
+    <!-- 3D Graphics Script (Three.js) -->
+    <script>
+        let scene, camera, renderer, particles, mesh;
+
+        function init3D() {
+            const container = document.getElementById('webgl-container');
+            
+            // Scene & Camera
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.z = 7;
+
+            // Renderer
+            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            container.appendChild(renderer.domElement);
+
+            // 3D Geometry Core (Icosahedron)
+            const geometry = new THREE.IcosahedronGeometry(2.2, 2);
+            const material = new THREE.MeshBasicMaterial({
+                color: 0x3b82f6,
+                wireframe: true,
+                transparent: true,
+                opacity: 0.25
+            });
+            mesh = new THREE.Mesh(geometry, material);
+            scene.add(mesh);
+
+            // Background Particle Grid
+            const particleCount = 700;
+            const particleGeo = new THREE.BufferGeometry();
+            const positions = new Float32Array(particleCount * 3);
+
+            for (let i = 0; i < particleCount * 3; i++) {
+                positions[i] = (Math.random() - 0.5) * 20;
+            }
+
+            particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            const particleMat = new THREE.PointsMaterial({
+                color: 0x60a5fa,
+                size: 0.035,
+                transparent: true,
+                opacity: 0.5
+            });
+
+            particles = new THREE.Points(particleGeo, particleMat);
+            scene.add(particles);
+
+            // Window Resize Listener
+            window.addEventListener('resize', onWindowResize);
+            
+            // Animation Loop
+            animate();
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+
+            // Slow rotations for sleek 3D background feel
+            if (mesh) {
+                mesh.rotation.x += 0.0015;
+                mesh.rotation.y += 0.0025;
+            }
+            if (particles) {
+                particles.rotation.y -= 0.0005;
+            }
+
+            renderer.render(scene, camera);
+        }
+
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        // Live Demo Simulation Logic
+        function runExtraction() {
+            const box = document.getElementById('output-box');
+            box.innerHTML = `<span class="text-yellow-400 font-sans flex items-center gap-2"><i class="fa-solid fa-spinner animate-spin"></i> Running OCR & Entity Verification...</span>`;
+
+            setTimeout(() => {
+                const sampleOutput = {
+                    "document_id": "SIH-2026-88192",
+                    "status": "VERIFIED_VALID",
+                    "extracted_fields": {
+                        "organization": "Central Verification Portal",
+                        "tax_id": "IN-88912-X",
+                        "compliance_score": 0.982
+                    },
+                    "mismatch_detected": false
+                };
+                box.innerHTML = `<pre class="text-left w-full">${JSON.stringify(sampleOutput, null, 2)}</pre>`;
+            }, 1200);
+        }
+
+        // Initialize 3D Graphics on Load
+        window.onload = init3D;
+    </script>
+</body>
+</html>
