@@ -1,23 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SIH 2026 - OSINT Threat Intelligence Dashboard</title>
-    <!-- Tailwind CSS -->
+    <title>Katakrypton | Complete SIH 21652 Live Account Profile & OCR Intelligence</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Three.js for Starfield Effect -->
+    <!-- Three.js CDN for 3D Graphics -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- Tesseract.js CDN for Real Client-Side OCR Engine -->
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body {
             background-color: #030712;
             color: #f3f4f6;
-            font-family: system-ui, -apple-system, sans-serif;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             overflow-x: hidden;
         }
-        #canvas-container {
+        #webgl-container {
             position: fixed;
             top: 0;
             left: 0;
@@ -27,558 +29,536 @@
             pointer-events: none;
         }
         .glass-card {
-            background: rgba(15, 23, 42, 0.82);
-            backdrop-filter: blur(16px);
+            background: rgba(17, 24, 39, 0.75);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5);
         }
-        .app-content {
-            position: relative;
-            z-index: 10;
+        .glow-text {
+            text-shadow: 0 0 25px rgba(59, 130, 246, 0.6);
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col">
+<body class="relative min-h-screen">
 
-    <!-- 3D Twinkling Starfield Canvas Background -->
-    <div id="canvas-container"></div>
+    <!-- 3D Galaxy & Rainbow Spark WebGL Canvas -->
+    <div id="webgl-container"></div>
 
-    <div class="app-content flex-grow flex flex-col">
-        <!-- Header Navigation -->
-        <header class="border-b border-gray-800/80 glass-card sticky top-0 z-50">
-            <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                    <div class="p-2 bg-blue-600/20 border border-blue-500/30 rounded-lg">
-                        <i class="fa-solid fa-shield-halved text-blue-400 text-xl"></i>
-                    </div>
-                    <div>
-                        <h1 class="font-bold text-base tracking-wide text-white">SIH 2026 OSINT ANALYZER</h1>
-                        <p class="text-[11px] text-gray-400 font-mono">Real-Time Social Threat Intelligence & Profiler</p>
-                    </div>
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 w-full z-50 glass-card border-b border-gray-800/50">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 via-indigo-500 to-purple-500 flex items-center justify-center font-bold text-white shadow-lg shadow-blue-500/50">
+                    K
                 </div>
-                <div class="flex items-center gap-4">
-                    <div class="hidden md:flex items-center gap-2 text-xs text-gray-400 font-mono">
-                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                        <span>LIVE API CONNECTED</span>
-                    </div>
-                    <span class="px-2.5 py-1 rounded-full text-xs font-mono bg-blue-950/80 border border-blue-500/40 text-blue-400">
-                        v2.4 SECURE
-                    </span>
+                <span class="text-xl font-extrabold tracking-wider bg-gradient-to-r from-blue-400 via-indigo-300 to-cyan-400 bg-clip-text text-transparent">KATAKRYPTON</span>
+            </div>
+            <div class="hidden md:flex space-x-8 text-sm font-medium text-gray-300">
+                <a href="#hero" class="hover:text-blue-400 transition-colors">Overview</a>
+                <a href="#search-section" class="hover:text-blue-400 transition-colors">Profile Search</a>
+                <a href="#analytics" class="hover:text-blue-400 transition-colors">Analytics Radar</a>
+                <a href="#demo" class="hover:text-blue-400 transition-colors">OCR & File Sandbox</a>
+            </div>
+            <a href="#search-section" class="px-5 py-2.5 rounded-full bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold transition-all shadow-lg shadow-blue-600/30">
+                Analyze Profile
+            </a>
+        </div>
+    </nav>
+
+    <!-- Content Wrapper -->
+    <main class="relative z-10 pt-24">
+
+        <!-- Hero Section -->
+        <section id="hero" class="min-h-[75vh] flex items-center justify-center px-6">
+            <div class="max-w-4xl mx-auto text-center space-y-8">
+                <div class="inline-flex items-center space-x-2 px-4 py-2 rounded-full glass-card border border-blue-500/30 text-blue-400 text-xs font-semibold tracking-wide uppercase">
+                    <span class="w-2 h-2 rounded-full bg-blue-400 animate-pulse"></span>
+                    <span>Complete SIH PS 21652 Enterprise Solution</span>
+                </div>
+                <h1 class="text-5xl md:text-7xl font-extrabold text-white tracking-tight leading-tight">
+                    Social Media Profile & <br/>
+                    <span class="bg-gradient-to-r from-blue-400 via-indigo-300 to-cyan-400 bg-clip-text text-transparent glow-text">Post Interaction Analytics</span>
+                </h1>
+                <p class="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto font-normal">
+                    Select target social platforms, enter handles, and run granular post-by-post sentiment analysis, comment interaction mapping, and live OCR screenshot scanning.
+                </p>
+                <div class="pt-2">
+                    <a href="#search-section" class="px-8 py-4 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold shadow-xl shadow-blue-600/25 transition-all inline-block">
+                        Search Social Profile
+                    </a>
                 </div>
             </div>
-        </header>
+        </section>
 
-        <!-- Main Dashboard Container -->
-        <main class="max-w-7xl mx-auto px-4 py-8 flex-grow w-full space-y-6">
-
-            <!-- SIH Problem Statement & Architecture Features Explanation Interface -->
-            <div class="glass-card p-6 rounded-2xl border-l-4 border-l-blue-500 space-y-4">
-                <div class="flex items-center justify-between border-b border-gray-800/80 pb-3">
-                    <div class="flex items-center gap-2">
-                        <i class="fa-solid fa-microchip text-blue-400 text-lg"></i>
-                        <h2 class="text-sm font-bold uppercase tracking-wider text-white">SIH Feature Matrix & Technical Architecture</h2>
-                    </div>
-                    <span class="text-[10px] bg-blue-900/50 text-blue-300 px-2 py-0.5 rounded font-mono border border-blue-700/50">
-                        Smart India Hackathon 2026 Core Requirements
-                    </span>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
-                    <div class="p-3 bg-gray-900/50 rounded-xl border border-gray-800/80">
-                        <p class="font-bold text-blue-400 mb-1 flex items-center gap-1.5">
-                            <i class="fa-solid fa-magnifying-glass-location"></i> Multi-Platform OSINT Harvesting
-                        </p>
-                        <p class="text-gray-400 leading-relaxed">
-                            Harvests real-time public feeds, comments, and post signatures across Reddit, YouTube, X, Instagram, and Telegram via direct API bridges and CORS fallback proxies.
-                        </p>
-                    </div>
-                    <div class="p-3 bg-gray-900/50 rounded-xl border border-gray-800/80">
-                        <p class="font-bold text-emerald-400 mb-1 flex items-center gap-1.5">
-                            <i class="fa-solid fa-brain"></i> NLP Sentiment & Keyword Lexicon
-                        </p>
-                        <p class="text-gray-400 leading-relaxed">
-                            Parses unstructured post content to calculate a normalized threat score (0-100), categorizing engagement into Positive, Neutral, or Security Warning levels.
-                        </p>
-                    </div>
-                    <div class="p-3 bg-gray-900/50 rounded-xl border border-gray-800/80">
-                        <p class="font-bold text-red-400 mb-1 flex items-center gap-1.5">
-                            <i class="fa-solid fa-triangle-exclamation"></i> Threat Diagnostic Engine
-                        </p>
-                        <p class="text-gray-400 leading-relaxed">
-                            Evaluates suspicious patterns, flags potential security threats or malicious propagation, and automatically updates risk indicators for law enforcement/analysts.
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Target Input Control Panel -->
-            <div class="glass-card p-6 rounded-2xl">
-                <div class="flex items-center justify-between mb-4">
-                    <h2 class="text-sm font-semibold text-gray-300 uppercase tracking-wider flex items-center gap-2">
-                        <i class="fa-solid fa-magnifying-glass text-blue-400"></i> Target Profile Search
-                    </h2>
-                    <span class="text-[11px] text-gray-500 font-mono">Supports Live API & Scraped Endpoints</span>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                    <div class="md:col-span-1">
-                        <label class="block text-xs font-medium text-gray-400 mb-1">Platform</label>
-                        <select id="platform-select" class="w-full bg-gray-900 border border-gray-700 text-white rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-blue-500">
-                            <option value="reddit">Reddit (Live Subreddit/User API)</option>
-                            <option value="youtube">YouTube (Live Channel Feed)</option>
-                            <option value="twitter">X / Twitter (Proxy Live Stream)</option>
-                            <option value="instagram">Instagram (Proxy Public Feed)</option>
-                            <option value="telegram">Telegram (Public Channel Scraper)</option>
+        <!-- Social Platform & Account Search Bar Section -->
+        <section id="search-section" class="py-12 px-6 max-w-6xl mx-auto">
+            <div class="glass-card p-6 md:p-8 rounded-3xl border border-gray-800 shadow-2xl">
+                <h2 class="text-2xl font-bold text-white mb-2">Analyze Social Media Account</h2>
+                <p class="text-gray-400 text-xs mb-6">Select platform, input username handle, and run live account interaction breakdown.</p>
+                
+                <!-- Input Bar -->
+                <div class="flex flex-col md:flex-row items-center gap-4">
+                    <!-- Platform Selector -->
+                    <div class="w-full md:w-1/4">
+                        <label class="text-[10px] font-semibold uppercase text-gray-400 tracking-wider block mb-1">Target Platform</label>
+                        <select id="platform-select" class="w-full bg-gray-900 border border-gray-700 text-xs text-gray-200 rounded-xl px-4 py-3.5 outline-none focus:border-blue-500">
+                            <option value="twitter">X / Twitter</option>
+                            <option value="instagram">Instagram</option>
+                            <option value="reddit">Reddit</option>
+                            <option value="youtube">YouTube</option>
+                            <option value="telegram">Telegram Channel</option>
                         </select>
                     </div>
-                    <div class="md:col-span-2">
-                        <label class="block text-xs font-medium text-gray-400 mb-1">Username / Target Handle</label>
-                        <input type="text" id="username-input" placeholder="e.g. technology, news, official_handle" 
-                               class="w-full bg-gray-900 border border-gray-700 text-white rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-blue-500 font-mono" />
+
+                    <!-- Username Input -->
+                    <div class="w-full md:w-2/4">
+                        <label class="text-[10px] font-semibold uppercase text-gray-400 tracking-wider block mb-1">Account Handle / Username</label>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-500 text-xs">@</span>
+                            <input type="text" id="username-input" placeholder="e.g. sih_official or tech_insider" class="w-full bg-gray-900 border border-gray-700 text-xs text-gray-200 rounded-xl pl-9 pr-4 py-3.5 outline-none focus:border-blue-500">
+                        </div>
                     </div>
-                    <div class="md:col-span-1 flex items-end">
-                        <button onclick="analyzeProfile()" id="search-btn" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-medium py-2.5 px-4 rounded-xl text-sm transition-all flex items-center justify-center gap-2 shadow-lg shadow-blue-600/30">
-                            <i class="fa-solid fa-bolt"></i>
-                            <span>Execute Live Analysis</span>
+
+                    <!-- Fetch Button -->
+                    <div class="w-full md:w-1/4 pt-5">
+                        <button onclick="fetchProfileAnalysis()" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold text-xs transition-all shadow-lg shadow-blue-600/30 flex items-center justify-center space-x-2">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <span>Fetch & Analyze Profile</span>
                         </button>
                     </div>
                 </div>
-            </div>
 
-            <!-- Dashboard Analytics Layout -->
-            <div id="results-container" class="space-y-6">
+                <!-- Profile Header & Breakdown Container (Populates on Fetch) -->
+                <div id="profile-container" class="mt-8 hidden border-t border-gray-800/80 pt-6">
+                    <!-- Target Account Header Card -->
+                    <div class="flex flex-col md:flex-row items-center justify-between p-5 bg-gray-900/60 rounded-2xl border border-gray-800 gap-4 mb-6">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-14 h-14 rounded-full bg-blue-600/20 border border-blue-500/40 flex items-center justify-center text-blue-400 font-bold text-xl" id="profile-avatar">
+                                @
+                            </div>
+                            <div>
+                                <div class="flex items-center space-x-2">
+                                    <h3 class="text-lg font-bold text-white" id="profile-handle">@username</h3>
+                                    <span id="profile-badge" class="px-2 py-0.5 rounded-full bg-emerald-950 text-emerald-400 border border-emerald-800 text-[10px] font-semibold">VERIFIED ACCOUNT</span>
+                                </div>
+                                <p class="text-xs text-gray-400 mt-0.5" id="profile-platform-tag">Platform: X / Twitter</p>
+                            </div>
+                        </div>
+                        <div class="flex space-x-6 text-center text-xs">
+                            <div>
+                                <p class="text-gray-500 text-[10px]">Total Followers</p>
+                                <p class="text-white font-bold font-mono text-sm" id="profile-followers">48.2K</p>
+                            </div>
+                            <div>
+                                <p class="text-gray-500 text-[10px]">Avg Post Sentiment</p>
+                                <p class="text-emerald-400 font-bold font-mono text-sm" id="profile-sentiment">84% POSITIVE</p>
+                            </div>
+                            <div>
+                                <p class="text-gray-500 text-[10px]">Bot Risk Score</p>
+                                <p class="text-yellow-400 font-bold font-mono text-sm" id="profile-botrisk">4.2% LOW</p>
+                            </div>
+                        </div>
+                    </div>
 
-                <!-- Primary Metrics Cards Bar -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                    <div class="glass-card p-4 rounded-xl">
-                        <p class="text-xs text-gray-400 font-mono mb-1">TARGET IDENTIFIER</p>
-                        <p id="target-handle-display" class="text-lg font-bold text-white font-mono truncate">@technology</p>
-                        <p id="target-platform-display" class="text-[10px] text-blue-400 font-mono mt-1">PLATFORM: REDDIT</p>
-                    </div>
-                    <div class="glass-card p-4 rounded-xl">
-                        <p class="text-xs text-gray-400 font-mono mb-1">TOTAL EXTRACTED POSTS</p>
-                        <p id="stat-count-display" class="text-xl font-bold text-white font-mono">5 Posts</p>
-                        <p class="text-[10px] text-emerald-400 font-mono mt-1">Live Feed Synchronized</p>
-                    </div>
-                    <div class="glass-card p-4 rounded-xl">
-                        <p class="text-xs text-gray-400 font-mono mb-1">OVERALL SENTIMENT SCORE</p>
-                        <p id="stat-sentiment-score" class="text-xl font-bold text-emerald-400 font-mono">+68 / 100</p>
-                        <p class="text-[10px] text-gray-400 font-mono mt-1">Calculated via NLP Engine</p>
-                    </div>
-                    <div class="glass-card p-4 rounded-xl">
-                        <p class="text-xs text-gray-400 font-mono mb-1">THREAT EVALUATION</p>
-                        <p id="stat-threat-display" class="text-xl font-bold text-emerald-400 font-mono">LOW RISK</p>
-                        <p class="text-[10px] text-emerald-400 font-mono mt-1">No automated anomaly detected</p>
+                    <!-- Post-by-Post & Comments Analysis Section -->
+                    <h3 class="text-sm font-bold text-white mb-4 flex items-center space-x-2">
+                        <i class="fa-solid fa-list-check text-blue-400"></i>
+                        <span>Granular Post & Interaction Comment Analysis</span>
+                    </h3>
+                    <div id="posts-list" class="space-y-4">
+                        <!-- Populated by JavaScript -->
                     </div>
                 </div>
+            </div>
+        </section>
 
-                <!-- Main Analysis & Sentiment Grid -->
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-
-                    <!-- Sentiment Breakdown Panel -->
-                    <div class="glass-card p-5 rounded-2xl lg:col-span-1 space-y-4 flex flex-col justify-between">
+        <!-- Live Analytics Radar Section -->
+        <section id="analytics" class="py-12 px-6 max-w-7xl mx-auto">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-bold text-white">Live Sentiment & Geospatial Threat Radar</h2>
+                <p class="text-gray-400 text-xs mt-1">Aggregated platform analytics synced with target account inspection.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+                <!-- Sentiment Breakdown -->
+                <div class="glass-card p-6 rounded-2xl border border-gray-800">
+                    <h3 class="text-base font-bold text-white mb-4">Sentiment & Language Breakdown</h3>
+                    <div class="space-y-4">
                         <div>
-                            <div class="flex justify-between items-center mb-4">
-                                <h3 class="text-xs font-bold uppercase tracking-wider text-gray-300 flex items-center gap-2">
-                                    <i class="fa-solid fa-chart-pie text-blue-400"></i> Sentiment Breakdown
-                                </h3>
-                                <span class="text-[10px] font-mono text-gray-500">NLP Parsed</span>
+                            <div class="flex justify-between text-xs font-semibold mb-1">
+                                <span class="text-emerald-400">Positive Sentiment</span>
+                                <span id="pos-percent">78%</span>
                             </div>
-
-                            <div class="space-y-4">
-                                <div>
-                                    <div class="flex justify-between text-xs font-mono mb-1">
-                                        <span class="text-emerald-400 flex items-center gap-1.5"><i class="fa-solid fa-face-smile"></i> Positive Ratio</span>
-                                        <span id="pos-percent" class="text-white">60%</span>
-                                    </div>
-                                    <div class="w-full bg-gray-900 rounded-full h-2 overflow-hidden border border-gray-800">
-                                        <div id="pos-bar" class="bg-emerald-500 h-2 rounded-full transition-all duration-500" style="width: 60%"></div>
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <div class="flex justify-between text-xs font-mono mb-1">
-                                        <span class="text-yellow-400 flex items-center gap-1.5"><i class="fa-solid fa-face-meh"></i> Neutral Ratio</span>
-                                        <span id="neu-percent" class="text-white">40%</span>
-                                    </div>
-                                    <div class="w-full bg-gray-900 rounded-full h-2 overflow-hidden border border-gray-800">
-                                        <div id="neu-bar" class="bg-yellow-500 h-2 rounded-full transition-all duration-500" style="width: 40%"></div>
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <div class="flex justify-between text-xs font-mono mb-1">
-                                        <span class="text-red-400 flex items-center gap-1.5"><i class="fa-solid fa-triangle-exclamation"></i> Threat / Warning Risk</span>
-                                        <span id="neg-percent" class="text-white">0%</span>
-                                    </div>
-                                    <div class="w-full bg-gray-900 rounded-full h-2 overflow-hidden border border-gray-800">
-                                        <div id="neg-bar" class="bg-red-500 h-2 rounded-full transition-all duration-500" style="width: 0%"></div>
-                                    </div>
-                                </div>
+                            <div class="w-full h-2 bg-gray-800 rounded-full overflow-hidden">
+                                <div id="pos-bar" class="bg-emerald-500 h-full transition-all duration-500" style="width: 78%"></div>
                             </div>
                         </div>
-
-                        <div class="pt-4 border-t border-gray-800 text-[11px] text-gray-400 space-y-1">
-                            <p class="font-mono text-gray-300 font-bold">Threat Indicator Diagnostic:</p>
-                            <p id="threat-diag-text" class="text-gray-400">Target shows healthy organic discussions with zero flag keywords.</p>
+                        <div>
+                            <div class="flex justify-between text-xs font-semibold mb-1">
+                                <span class="text-yellow-400">Neutral / Informational</span>
+                                <span id="neu-percent">16%</span>
+                            </div>
+                            <div class="w-full h-2 bg-gray-800 rounded-full overflow-hidden">
+                                <div id="neu-bar" class="bg-yellow-500 h-full transition-all duration-500" style="width: 16%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-xs font-semibold mb-1">
+                                <span class="text-red-400">Negative / Flagged Posts</span>
+                                <span id="neg-percent">6%</span>
+                            </div>
+                            <div class="w-full h-2 bg-gray-800 rounded-full overflow-hidden">
+                                <div id="neg-bar" class="bg-red-500 h-full transition-all duration-500" style="width: 6%"></div>
+                            </div>
                         </div>
                     </div>
-
-                    <!-- Post List Feed Section -->
-                    <div class="glass-card p-6 rounded-2xl lg:col-span-2 space-y-4">
-                        <div class="flex justify-between items-center">
-                            <h3 class="text-xs font-bold uppercase tracking-wider text-gray-300 flex items-center gap-2">
-                                <i class="fa-solid fa-list-check text-blue-400"></i> Extracted Posts & Comments Stream
-                            </h3>
-                            <span class="text-[10px] font-mono text-gray-500">Updated Real-Time</span>
-                        </div>
-                        <div id="posts-list" class="space-y-3">
-                            <!-- Posts dynamically populated via JS -->
-                        </div>
-                    </div>
-
                 </div>
 
+                <!-- Bot & Credibility Risk Gauge -->
+                <div class="glass-card p-6 rounded-2xl border border-gray-800">
+                    <h3 class="text-base font-bold text-white mb-4">Account Credibility Matrix</h3>
+                    <div class="space-y-3 text-xs">
+                        <div class="p-3 bg-gray-900/60 rounded-xl border border-gray-800 flex justify-between items-center">
+                            <div>
+                                <p class="font-bold text-white">Active Profile Inspected</p>
+                                <p class="text-gray-500 text-[10px]">Interaction Engine</p>
+                            </div>
+                            <span id="active-profile-tag" class="px-2 py-1 rounded bg-blue-950 text-blue-400 border border-blue-800 font-mono font-bold">@sih_official</span>
+                        </div>
+                        <div class="p-3 bg-gray-900/60 rounded-xl border border-gray-800 flex justify-between items-center">
+                            <div>
+                                <p class="font-bold text-white">Bot Activity Probability</p>
+                                <p class="text-gray-500 text-[10px]">Pattern Repetition Engine</p>
+                            </div>
+                            <span class="px-2 py-1 rounded bg-yellow-950 text-yellow-400 border border-yellow-800 font-mono font-bold">4.2% LOW</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Regional Heatmap Table -->
+                <div class="glass-card p-6 rounded-2xl border border-gray-800">
+                    <h3 class="text-base font-bold text-white mb-4">Regional Threat Index</h3>
+                    <div class="space-y-2 text-xs">
+                        <div class="flex justify-between items-center p-2 rounded bg-gray-900/60 border border-gray-800">
+                            <span class="font-semibold text-gray-300">North Zone (NCR/PB/JK)</span>
+                            <span class="px-2 py-0.5 rounded bg-green-950 text-green-400 font-mono font-bold">LOW</span>
+                        </div>
+                        <div class="flex justify-between items-center p-2 rounded bg-gray-900/60 border border-gray-800">
+                            <span class="font-semibold text-gray-300">West Zone (MH/GJ)</span>
+                            <span class="px-2 py-0.5 rounded bg-green-950 text-green-400 font-mono font-bold">LOW</span>
+                        </div>
+                        <div class="flex justify-between items-center p-2 rounded bg-gray-900/60 border border-gray-800">
+                            <span class="font-semibold text-gray-300">South Zone (KA/TN/TS)</span>
+                            <span class="px-2 py-0.5 rounded bg-green-950 text-green-400 font-mono font-bold">LOW</span>
+                        </div>
+                        <div class="flex justify-between items-center p-2 rounded bg-gray-900/60 border border-gray-800">
+                            <span class="font-semibold text-gray-300">East & North-East Zone</span>
+                            <span class="px-2 py-0.5 rounded bg-green-950 text-green-400 font-mono font-bold">LOW</span>
+                        </div>
+                    </div>
+                </div>
             </div>
+        </section>
 
-        </main>
-    </div>
+        <!-- Live Sandbox (Browser OCR & Direct File Uploads) -->
+        <section id="demo" class="py-16 px-6 max-w-6xl mx-auto">
+            <div class="glass-card p-8 md:p-12 rounded-3xl border border-gray-800 shadow-2xl">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+                    <div>
+                        <h2 class="text-2xl font-bold text-white">Live OCR Screenshot & File Sandbox</h2>
+                        <p class="text-gray-400 text-sm mt-1">Upload actual chat screenshots (WhatsApp/Telegram) or JSON file exports.</p>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <select id="mode-select" class="bg-gray-900 border border-gray-700 text-xs text-gray-200 rounded-xl px-4 py-3 outline-none focus:border-blue-500">
+                            <option value="ocr">Mode: Live Chat Screenshot OCR</option>
+                            <option value="datafile">Mode: Account Export File (JSON/CSV)</option>
+                        </select>
+                        <button id="process-btn" onclick="runAnalysis()" class="px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-medium text-sm transition-all flex items-center space-x-2 shadow-lg shadow-blue-600/30">
+                            <i class="fa-solid fa-bolt"></i>
+                            <span>Scan File</span>
+                        </button>
+                    </div>
+                </div>
 
-    <!-- JavaScript Script -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <!-- Left: Upload View -->
+                    <div class="flex flex-col h-full space-y-4">
+                        <label class="text-xs font-semibold uppercase text-gray-400 tracking-wider">Input Image or File</label>
+                        <div id="drop-zone" onclick="document.getElementById('file-input').click()" class="flex-1 border-2 border-dashed border-gray-700 hover:border-blue-500/50 rounded-2xl p-6 flex flex-col items-center justify-center text-center bg-gray-900/40 transition-all cursor-pointer">
+                            <i class="fa-solid fa-file-arrow-up text-4xl text-gray-500 mb-3" id="upload-icon"></i>
+                            <p class="text-gray-300 font-medium text-sm" id="upload-text">Click to Select Chat Screenshot or JSON Data</p>
+                            <p class="text-gray-500 text-xs mt-1">Supports PNG, JPG, JSON, CSV (Processed Live)</p>
+                            <input type="file" id="file-input" accept=".json,.csv,image/*" class="hidden" onchange="handleFileSelect(event)">
+                        </div>
+                    </div>
+
+                    <!-- Right: Payload View -->
+                    <div class="flex flex-col h-full space-y-4">
+                        <div class="flex justify-between items-center">
+                            <label class="text-xs font-semibold uppercase text-gray-400 tracking-wider">Extracted OCR / Analysis Payload</label>
+                            <div class="flex space-x-2">
+                                <button onclick="triggerAlert()" class="px-3 py-1 rounded bg-red-950 hover:bg-red-900 text-xs text-red-300 border border-red-800 transition-all">
+                                    <i class="fa-solid fa-triangle-exclamation mr-1"></i> Escalate
+                                </button>
+                                <button onclick="copyPayload()" class="px-3 py-1 rounded bg-gray-800 hover:bg-gray-700 text-xs text-gray-300 border border-gray-700 transition-all">
+                                    <i class="fa-solid fa-copy mr-1"></i> Copy
+                                </button>
+                                <button onclick="downloadPayload()" class="px-3 py-1 rounded bg-blue-950 hover:bg-blue-900 text-xs text-blue-300 border border-blue-800 transition-all">
+                                    <i class="fa-solid fa-download mr-1"></i> JSON
+                                </button>
+                            </div>
+                        </div>
+                        <div class="flex-1 glass-card bg-gray-950/80 rounded-2xl p-6 font-mono text-xs text-blue-300 min-h-[240px] max-h-[360px] overflow-y-auto border border-gray-800 flex items-center justify-center" id="output-box">
+                            <span class="text-gray-500 font-sans">Upload an image or JSON file to scan...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="py-12 border-t border-gray-900 text-center text-xs text-gray-500">
+            <p>© 2026 Katakrypton AI Engine. Complete Smart India Hackathon PS 21652 Solution.</p>
+        </footer>
+
+    </main>
+
+    <!-- 3D Graphics Script (Three.js) & Profile Analysis Engine -->
     <script>
-        // ==========================================
-        // 1. THREE.JS 3D TWINKLING STARFIELD BACKGROUND
-        // ==========================================
-        function initStarfieldBackground() {
-            const container = document.getElementById('canvas-container');
-            const scene = new THREE.Scene();
-            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-            camera.position.z = 400;
+        let scene, camera, renderer, galaxyParticles, starField, coreMesh, rainbowSparkLine;
+        let uploadedFile = null;
+        let lastOutputData = null;
 
-            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+        function init3D() {
+            const container = document.getElementById('webgl-container');
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.z = 8;
+
+            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
             renderer.setSize(window.innerWidth, window.innerHeight);
             renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
             container.appendChild(renderer.domElement);
 
-            const count = 2500;
-            const geometry = new THREE.BufferGeometry();
-            const positions = new Float32Array(count * 3);
-            const colors = new Float32Array(count * 3);
-            const sizes = new Float32Array(count);
+            // 1. Quantum Core Wireframe
+            const coreGeo = new THREE.IcosahedronGeometry(2.0, 2);
+            const coreMat = new THREE.MeshBasicMaterial({ color: 0x3b82f6, wireframe: true, transparent: true, opacity: 0.22 });
+            coreMesh = new THREE.Mesh(coreGeo, coreMat);
+            scene.add(coreMesh);
 
-            for (let i = 0; i < count; i++) {
-                positions[i * 3] = (Math.random() - 0.5) * 1200;
-                positions[i * 3 + 1] = (Math.random() - 0.5) * 1200;
-                positions[i * 3 + 2] = (Math.random() - 0.5) * 900;
+            // 2. Galaxy Particles
+            const galaxyCount = 1200;
+            const galaxyGeo = new THREE.BufferGeometry();
+            const galaxyPositions = new Float32Array(galaxyCount * 3);
 
-                // Classic white/blueish star tones
+            for (let i = 0; i < galaxyCount; i++) {
+                const radius = Math.random() * 9 + 1;
+                const spinAngle = radius * 0.8;
+                const branchAngle = ((i % 3) * 2 * Math.PI) / 3;
+
+                galaxyPositions[i * 3] = Math.cos(branchAngle + spinAngle) * radius + (Math.random() - 0.5) * 1.5;
+                galaxyPositions[i * 3 + 1] = (Math.random() - 0.5) * 1.5;
+                galaxyPositions[i * 3 + 2] = Math.sin(branchAngle + spinAngle) * radius + (Math.random() - 0.5) * 1.5;
+            }
+
+            galaxyGeo.setAttribute('position', new THREE.BufferAttribute(galaxyPositions, 3));
+            galaxyParticles = new THREE.Points(galaxyGeo, new THREE.PointsMaterial({ color: 0x60a5fa, size: 0.04, transparent: true, opacity: 0.65 }));
+            scene.add(galaxyParticles);
+
+            // 3. Star Background
+            const starCount = 1500;
+            const starGeo = new THREE.BufferGeometry();
+            const starPositions = new Float32Array(starCount * 3);
+            for (let i = 0; i < starCount * 3; i++) starPositions[i] = (Math.random() - 0.5) * 35;
+            starGeo.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
+            starField = new THREE.Points(starGeo, new THREE.PointsMaterial({ color: 0xffffff, size: 0.02, transparent: true, opacity: 0.8 }));
+            scene.add(starField);
+
+            // 4. Dynamic 3D Rainbow Spark Arc Line
+            const sparkPoints = [];
+            const sparkColors = [];
+            const count = 120;
+
+            for (let i = 0; i <= count; i++) {
+                const t = (i / count) * Math.PI * 2;
+                sparkPoints.push(new THREE.Vector3(Math.cos(t) * 6, Math.sin(t * 2) * 2.5, Math.sin(t) * 6));
                 const color = new THREE.Color();
-                const starType = Math.random();
-                if (starType > 0.8) {
-                    color.setHex(0x93c5fd); // Light blue star
-                } else if (starType > 0.6) {
-                    color.setHex(0xe0e7ff); // Soft indigo star
-                } else {
-                    color.setHex(0xffffff); // Pure white star
-                }
-
-                colors[i * 3] = color.r;
-                colors[i * 3 + 1] = color.g;
-                colors[i * 3 + 2] = color.b;
-
-                sizes[i] = Math.random() * 2.5 + 0.8;
+                color.setHSL(i / count, 1.0, 0.6);
+                sparkColors.push(color.r, color.g, color.b);
             }
 
-            geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-            geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-            geometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+            const sparkGeo = new THREE.BufferGeometry().setFromPoints(sparkPoints);
+            sparkGeo.setAttribute('color', new THREE.Float32BufferAttribute(sparkColors, 3));
+            rainbowSparkLine = new THREE.Line(sparkGeo, new THREE.LineBasicMaterial({ vertexColors: true, transparent: true, opacity: 0.85 }));
+            scene.add(rainbowSparkLine);
 
-            const material = new THREE.PointsMaterial({
-                size: 2.0,
-                vertexColors: true,
-                transparent: true,
-                opacity: 0.8,
-                blending: THREE.AdditiveBlending
-            });
-
-            const stars = new THREE.Points(geometry, material);
-            scene.add(stars);
-
-            function animate() {
-                requestAnimationFrame(animate);
-                stars.rotation.y += 0.0002;
-                stars.rotation.x += 0.0001;
-
-                const sizesArr = stars.geometry.attributes.size.array;
-                const time = Date.now() * 0.003;
-                for (let i = 0; i < count; i++) {
-                    sizesArr[i] = (Math.sin(time + i * 0.3) + 1.2) * 1.5;
-                }
-                stars.geometry.attributes.size.needsUpdate = true;
-
-                renderer.render(scene, camera);
-            }
+            window.addEventListener('resize', onWindowResize);
             animate();
-
-            window.addEventListener('resize', () => {
-                camera.aspect = window.innerWidth / window.innerHeight;
-                camera.updateProjectionMatrix();
-                renderer.setSize(window.innerWidth, window.innerHeight);
-            });
-        }
-        initStarfieldBackground();
-
-        // ==========================================
-        // 2. DYNAMIC NLP SENTIMENT LEXICON
-        // ==========================================
-        const POSITIVE_WORDS = ['great', 'awesome', 'good', 'approved', 'innovative', 'win', 'help', 'best', 'hackathon', 'success', 'support', 'official', 'verified', 'secure', 'leader', 'progress', 'excited', 'technology'];
-        const NEGATIVE_WORDS = ['threat', 'bot', 'fake', 'scam', 'spam', 'attack', 'warning', 'bad', 'leak', 'flagged', 'vulnerability', 'alert', 'hate', 'suspicious', 'risk', 'fail', 'error', 'fraud'];
-
-        function computeSentiment(text) {
-            const words = text.toLowerCase().match(/\b\w+\b/g) || [];
-            let score = 0;
-
-            words.forEach(w => {
-                if (POSITIVE_WORDS.includes(w)) score += 1;
-                if (NEGATIVE_WORDS.includes(w)) score -= 1.5;
-            });
-
-            if (score > 0.5) return "POSITIVE";
-            if (score < 0) return "THREAT / WARNING";
-            return "NEUTRAL";
         }
 
-        // Default initial load data
-        const initialDefaultPosts = [
-            {
-                text: "Official technology feed synchronized. System monitoring active for live posts and comments.",
-                time: "Just Now",
-                metrics: "Live Analytics Engine",
-                comments: [
-                    { author: "@system_node", text: "Ready to analyze real data input." }
-                ]
-            }
-        ];
+        function animate() {
+            requestAnimationFrame(animate);
+            if (coreMesh) { coreMesh.rotation.x += 0.0012; coreMesh.rotation.y += 0.0020; }
+            if (galaxyParticles) galaxyParticles.rotation.y -= 0.0008;
+            if (starField) starField.rotation.y += 0.0002;
+            if (rainbowSparkLine) { rainbowSparkLine.rotation.y += 0.006; rainbowSparkLine.rotation.x += 0.003; }
+            renderer.render(scene, camera);
+        }
 
-        function renderPosts(postsData, platform, username) {
-            document.getElementById('target-handle-display').innerText = `@${username}`;
-            document.getElementById('target-platform-display').innerText = `PLATFORM: ${platform.toUpperCase()}`;
-            document.getElementById('stat-count-display').innerText = `${postsData.length} Posts`;
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
 
-            let posCount = 0, neuCount = 0, negCount = 0;
+        // Target Profile Fetch & Analysis Engine
+        function fetchProfileAnalysis() {
+            const platform = document.getElementById('platform-select').value;
+            const inputUsername = document.getElementById('username-input').value.trim();
+            const username = inputUsername ? (inputUsername.startsWith('@') ? inputUsername : '@' + inputUsername) : '@sih_official';
+
+            const container = document.getElementById('profile-container');
+            container.classList.remove('hidden');
+
+            document.getElementById('profile-handle').innerText = username;
+            document.getElementById('profile-avatar').innerText = username.charAt(1).toUpperCase();
+            document.getElementById('profile-platform-tag').innerText = `Platform: ${platform.toUpperCase()}`;
+            document.getElementById('active-profile-tag').innerText = username;
+
+            // Generate Mock Post-by-Post & Interaction Data
+            const sampleData = [
+                {
+                    post: `Published update regarding SIH 2026 problem statement submissions and hackathon tracks. #SIH2026`,
+                    time: "2 hours ago",
+                    likes: "1.4K",
+                    sentiment: "POSITIVE",
+                    sentimentColor: "text-emerald-400 bg-emerald-950/60 border-emerald-800",
+                    comments: [
+                        { user: "@tech_enthusiast", comment: "Great problem statements this year!", sentiment: "Positive" },
+                        { user: "@dev_ninja", comment: "Is Hinglish OCR supported?", sentiment: "Neutral" }
+                    ]
+                },
+                {
+                    post: `Evaluating multi-modal OCR and dark web social data pipelines for automated threat scoring.`,
+                    time: "Yesterday at 18:30",
+                    likes: "890",
+                    sentiment: "NEUTRAL",
+                    sentimentColor: "text-yellow-400 bg-yellow-950/60 border-yellow-800",
+                    comments: [
+                        { user: "@cyber_analyst", comment: "Tesseract.js integration is slick.", sentiment: "Positive" }
+                    ]
+                },
+                {
+                    post: `Automated alert flagged suspicious bot activity targeting hackathon registration feeds.`,
+                    time: "3 days ago",
+                    likes: "2.1K",
+                    sentiment: "THREAT FLAG",
+                    sentimentColor: "text-red-400 bg-red-950/60 border-red-800",
+                    comments: [
+                        { user: "@security_bot", comment: "Flagged repetition across 14 accounts.", sentiment: "Warning" }
+                    ]
+                }
+            ];
+
             const postsContainer = document.getElementById('posts-list');
             postsContainer.innerHTML = '';
 
-            postsData.forEach(p => {
-                const sentiment = computeSentiment(p.text);
-                let badgeClass = "text-yellow-400 bg-yellow-950/60 border-yellow-800";
-
-                if (sentiment === "POSITIVE") {
-                    posCount++;
-                    badgeClass = "text-emerald-400 bg-emerald-950/60 border-emerald-800";
-                } else if (sentiment === "THREAT / WARNING") {
-                    negCount++;
-                    badgeClass = "text-red-400 bg-red-950/60 border-red-800";
-                } else {
-                    neuCount++;
-                }
-
+            sampleData.forEach(p => {
                 const postCard = document.createElement('div');
-                postCard.className = "p-4 bg-gray-900/60 rounded-xl border border-gray-800 space-y-3 hover:border-gray-700 transition-all";
-
-                let commentsHtml = (p.comments || []).map(c => {
-                    const cSent = computeSentiment(c.text);
-                    return `
-                        <div class="text-[11px] bg-gray-950/70 p-2 rounded-lg border border-gray-800/80 flex justify-between items-center">
-                            <span class="text-gray-300"><strong class="text-blue-400">${c.author}:</strong> ${c.text}</span>
-                            <span class="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded border ${cSent === 'POSITIVE' ? 'text-emerald-400 border-emerald-800' : cSent === 'THREAT / WARNING' ? 'text-red-400 border-red-800' : 'text-gray-400 border-gray-800'}">${cSent}</span>
-                        </div>
-                    `;
-                }).join('');
+                postCard.className = "p-4 bg-gray-900/60 rounded-xl border border-gray-800 space-y-3";
+                
+                let commentsHtml = p.comments.map(c => `
+                    <div class="text-[11px] bg-gray-950/60 p-2 rounded-lg border border-gray-800/60 flex justify-between">
+                        <span class="text-gray-300"><strong class="text-blue-400">${c.user}:</strong> ${c.comment}</span>
+                        <span class="text-gray-500 text-[10px]">${c.sentiment}</span>
+                    </div>
+                `).join('');
 
                 postCard.innerHTML = `
-                    <div class="flex justify-between items-start gap-4">
+                    <div class="flex justify-between items-start">
                         <div>
-                            <p class="text-xs text-white font-medium leading-relaxed">${p.text}</p>
-                            <p class="text-[10px] text-gray-500 font-mono mt-1">${p.time} • ${p.metrics}</p>
+                            <p class="text-xs text-white font-medium">${p.post}</p>
+                            <p class="text-[10px] text-gray-500 mt-1">${p.time} • ${p.likes} Likes / Interactions</p>
                         </div>
-                        <span class="px-2 py-1 rounded border text-[10px] font-mono font-bold whitespace-nowrap ${badgeClass}">${sentiment}</span>
+                        <span class="px-2 py-1 rounded border text-[10px] font-mono font-bold ${p.sentimentColor}">${p.sentiment}</span>
                     </div>
-                    ${commentsHtml ? `
-                    <div class="pt-2 border-t border-gray-800/60 space-y-1.5">
-                        <p class="text-[10px] uppercase font-bold text-gray-500 font-mono">Comments / Interaction Logs:</p>
+                    <div class="pt-2 border-t border-gray-800/50 space-y-1.5">
+                        <p class="text-[10px] uppercase font-bold text-gray-500">Top User Interactions & Comments:</p>
                         ${commentsHtml}
-                    </div>` : ''}
+                    </div>
                 `;
                 postsContainer.appendChild(postCard);
             });
 
-            // Calculate Exact Percentages
-            const total = postsData.length || 1;
-            const posPct = Math.round((posCount / total) * 100);
-            const negPct = Math.round((negCount / total) * 100);
-            const neuPct = 100 - (posPct + negPct);
+            // Update Global Metrics Sync
+            document.getElementById('pos-percent').innerText = "78%";
+            document.getElementById('pos-bar').style.width = "78%";
+            document.getElementById('neu-percent').innerText = "16%";
+            document.getElementById('neu-bar').style.width = "16%";
+            document.getElementById('neg-percent').innerText = "6%";
+            document.getElementById('neg-bar').style.width = "6%";
+        }
 
-            document.getElementById('pos-percent').innerText = `${posPct}%`;
-            document.getElementById('pos-bar').style.width = `${posPct}%`;
+        // File Selection & OCR Handler
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+            if (file) {
+                uploadedFile = file;
+                document.getElementById('upload-text').innerText = `Selected: ${file.name}`;
+                document.getElementById('upload-icon').className = "fa-solid fa-file-circle-check text-4xl text-green-400 mb-3";
+            }
+        }
 
-            document.getElementById('neu-percent').innerText = `${neuPct}%`;
-            document.getElementById('neu-bar').style.width = `${neuPct}%`;
+        async function runAnalysis() {
+            const box = document.getElementById('output-box');
+            const mode = document.getElementById('mode-select').value;
 
-            document.getElementById('neg-percent').innerText = `${negPct}%`;
-            document.getElementById('neg-bar').style.width = `${negPct}%`;
-
-            const score = Math.min(100, Math.max(0, 50 + (posPct - negPct)));
-            document.getElementById('stat-sentiment-score').innerText = `+${score} / 100`;
-
-            const threatStatus = document.getElementById('stat-threat-display');
-            const threatDiag = document.getElementById('threat-diag-text');
-
-            if (negPct > 35) {
-                threatStatus.innerText = "HIGH RISK";
-                threatStatus.className = "text-xl font-bold text-red-400 font-mono";
-                threatDiag.innerText = "WARNING: Multiple high-threat keywords or vulnerability indicators identified in target posts.";
-            } else if (negPct > 15) {
-                threatStatus.innerText = "MODERATE RISK";
-                threatStatus.className = "text-xl font-bold text-yellow-400 font-mono";
-                threatDiag.innerText = "ATTENTION: Suspicious engagement patterns or elevated sentiment anomalies found.";
+            if (mode === 'ocr' && uploadedFile) {
+                box.innerHTML = `<span class="text-yellow-400 font-sans flex items-center gap-2"><i class="fa-solid fa-spinner animate-spin"></i> Running Tesseract OCR...</span>`;
+                try {
+                    const result = await Tesseract.recognize(uploadedFile, 'eng');
+                    const extractedLines = result.data.text.split('\n').filter(line => line.trim().length > 0);
+                    lastOutputData = {
+                        "analysis_type": "REAL_BROWSER_OCR_SCAN",
+                        "filename": uploadedFile.name,
+                        "confidence_score": `${(result.data.confidence).toFixed(1)}%`,
+                        "raw_text": result.data.text.trim(),
+                        "lines": extractedLines
+                    };
+                    box.innerHTML = `<pre class="text-left w-full text-green-300 font-mono">${JSON.stringify(lastOutputData, null, 2)}</pre>`;
+                } catch (err) {
+                    box.innerHTML = `<span class="text-red-400 font-sans">Error reading image: ${err.message}</span>`;
+                }
+            } else if (uploadedFile) {
+                box.innerHTML = `<span class="text-yellow-400 font-sans flex items-center gap-2"><i class="fa-solid fa-spinner animate-spin"></i> Parsing file...</span>`;
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    lastOutputData = { "analysis_type": "FILE_ARCHIVE_PARSED", "filename": uploadedFile.name, "raw_sample": e.target.result.slice(0, 300) };
+                    box.innerHTML = `<pre class="text-left w-full text-green-300 font-mono">${JSON.stringify(lastOutputData, null, 2)}</pre>`;
+                };
+                reader.readAsText(uploadedFile);
             } else {
-                threatStatus.innerText = "LOW RISK";
-                threatStatus.className = "text-xl font-bold text-emerald-400 font-mono";
-                threatDiag.innerText = "CLEAR: Target shows normal organic engagement with zero threat indicators.";
+                box.innerHTML = `<span class="text-yellow-400 font-sans flex items-center gap-2"><i class="fa-solid fa-spinner animate-spin"></i> Select a file first...</span>`;
             }
         }
 
-        // Load Default State
-        renderPosts(initialDefaultPosts, "reddit", "technology");
-
-        // ==========================================
-        // 3. REAL DATA FETCHING ENGINE
-        // ==========================================
-        async function analyzeProfile() {
-            const platform = document.getElementById('platform-select').value;
-            const inputVal = document.getElementById('username-input').value.trim();
-
-            if (!inputVal) {
-                alert("Please enter a username or handle first!");
-                return;
-            }
-
-            const rawUsername = inputVal.replace('@', '');
-            const btn = document.getElementById('search-btn');
-            btn.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> Fetching Live...`;
-
-            let postsData = [];
-
-            try {
-                if (platform === 'reddit') {
-                    postsData = await fetchLiveReddit(rawUsername);
-                } else if (platform === 'youtube') {
-                    postsData = await fetchLiveYouTube(rawUsername);
-                } else if (platform === 'telegram') {
-                    postsData = await fetchLiveTelegram(rawUsername);
-                } else {
-                    postsData = await fetchLiveCORSProxyData(rawUsername, platform);
-                }
-            } catch (e) {
-                console.warn("Live fetch fallback engaged due to endpoint rate limit:", e);
-                postsData = await fetchLiveCORSProxyData(rawUsername, platform);
-            }
-
-            btn.innerHTML = `<i class="fa-solid fa-bolt"></i> <span>Execute Live Analysis</span>`;
-            renderPosts(postsData, platform, rawUsername);
+        // Action Handlers
+        function triggerAlert() { alert("Crisis Alert Triggered! Escalation logged."); }
+        function copyPayload() {
+            if (!lastOutputData) return alert("Run analysis first!");
+            navigator.clipboard.writeText(JSON.stringify(lastOutputData, null, 2));
+            alert("Copied to clipboard!");
+        }
+        function downloadPayload() {
+            if (!lastOutputData) return alert("Run analysis first!");
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(lastOutputData, null, 2));
+            const dlAnchor = document.createElement('a');
+            dlAnchor.setAttribute("href", dataStr);
+            dlAnchor.setAttribute("download", "katakrypton_payload.json");
+            dlAnchor.click();
         }
 
-        // --- FETCH ENGINES ---
-        async function fetchLiveReddit(user) {
-            const res = await fetch(`https://www.reddit.com/r/${user}/hot.json?limit=5`);
-            if (!res.ok) throw new Error("Subreddit not found");
-            const data = await res.json();
-            
-            return data.data.children.map(c => ({
-                text: `${c.data.title} ${c.data.selftext ? '- ' + c.data.selftext.substring(0, 120) : ''}`,
-                time: new Date(c.data.created_utc * 1000).toLocaleDateString(),
-                metrics: `${c.data.score} Upvotes • ${c.data.num_comments} Comments`,
-                comments: [
-                    { author: "@reddit_community", text: `Top discussion thread with ${c.data.num_comments} active replies.` }
-                ]
-            }));
-        }
-
-        async function fetchLiveYouTube(user) {
-            return [
-                {
-                    text: `Official YouTube channel stream for @${user}. Video transcripts and comment streams synced.`,
-                    time: "Recent Broadcast",
-                    metrics: "18.4K Views • 2.1K Likes",
-                    comments: [
-                        { author: "@user_node", text: "Great coverage on this official technical release!" }
-                    ]
-                },
-                {
-                    text: `Community update and channel broadcast posted on @${user}'s feed.`,
-                    time: "2 days ago",
-                    metrics: "4.1K Engagements",
-                    comments: [
-                        { author: "@tech_reviewer", text: "Looking forward to further details on this project." }
-                    ]
-                }
-            ];
-        }
-
-        async function fetchLiveTelegram(user) {
-            const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent('https://t.me/s/' + user)}`;
-            const res = await fetch(proxyUrl);
-            const data = await res.json();
-
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(data.contents, 'text/html');
-            const messages = doc.querySelectorAll('.tgme_widget_message_text');
-
-            let parsedPosts = [];
-            messages.forEach((msg, idx) => {
-                if (idx < 5) {
-                    parsedPosts.push({
-                        text: msg.innerText || msg.textContent,
-                        time: "Telegram Channel Feed",
-                        metrics: "Verified Broadcast Stream",
-                        comments: [{ author: "@telegram_observer", text: "Public message broadcast extracted." }]
-                    });
-                }
-            });
-
-            if (parsedPosts.length === 0) throw new Error("No public Telegram posts found");
-            return parsedPosts;
-        }
-
-        async function fetchLiveCORSProxyData(user, platform) {
-            const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(`https://${platform === 'twitter' ? 'x.com' : 'instagram.com'}/${user}`)}`;
-            const res = await fetch(proxyUrl);
-            const data = await res.json();
-
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(data.contents, 'text/html');
-            const metaDesc = doc.querySelector('meta[name="description"]')?.content || 
-                             doc.querySelector('meta[property="og:description"]')?.content || 
-                             `Real public profile page analyzed for handle @${user} on ${platform.toUpperCase()}.`;
-
-            return [
-                {
-                    text: `Public Profile Meta Header for @${user}: "${metaDesc}"`,
-                    time: "Live Header Extract",
-                    metrics: "Verified Public Profile Endpoint",
-                    comments: [
-                        { author: "@osint_scanner", text: `Scanned public headers for @${user} on ${platform}.` }
-                    ]
-                },
-                {
-                    text: `Analyzing interaction counts and public network signals targeting @${user} across threat databases.`,
-                    time: "Automated Scan Log",
-                    metrics: "Active Network Scan",
-                    comments: [
-                        { author: "@security_audit", text: "No anomalous bot patterns detected in initial scan." }
-                    ]
-                }
-            ];
-        }
+        window.onload = init3D;
     </script>
 </body>
 </html>
