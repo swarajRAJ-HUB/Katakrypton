@@ -123,8 +123,10 @@
                     <div class="w-full md:w-1/4 pt-5">
                         <button onclick="fetchProfileAnalysis()" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold text-xs transition-all shadow-lg shadow-blue-600/30 flex items-center justify-center space-x-2">
                             <i class="fa-solid fa-magnifying-glass"></i>
-                            <span>Fetch & Analyze Profile</span>
-                        </button>
+                           <button onclick="fetchProfileAnalysis()" class="px-6 py-2.5 bg-blue-600 hover:bg-blue-500 rounded-xl text-white font-medium flex items-center gap-2 transition-all">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span><button onclick="fetchProfileAnalysis()" class="px-6 py-2.5 bg-blue-600 hover:bg-blue-500 rounded-xl text-white font-medium flex items-center gap-2 transition-all">     <i class="fa-solid fa-magnifying-glass"></i>     <span>Fetch & Analyze Profile</span> </button> Analyze Profile</span>
+</button>
                     </div>
                 </div>
 
@@ -542,62 +544,60 @@
             }
         }
 
-        // Action Handlers
-        function triggerAlert() { alert("Crisis Alert Triggered! Escalation logged."); }
-        function copyPayload() {
-            if (!lastOutputData) return alert("Run analysis first!");
-            navigator.clipboard.writeText(JSON.stringify(lastOutputData, null, 2));
-            alert("Copied to clipboard!");
-        }
-        function downloadPayload() {
-            if (!lastOutputData) return alert("Run analysis first!");
-            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(lastOutputData, null, 2));
-            const dlAnchor = document.createElement('a');
-            dlAnchor.setAttribute("href", dataStr);
-            dlAnchor.setAttribute("download", "katakrypton_payload.json");
-            dlAnchor.click();
-        }
+        // Live Backend Profile Analysis Handler
 async function fetchProfileAnalysis() {
-    const inputField = document.getElementById('username-input') || document.querySelector('input[type="text"]');
-    const userInput = inputField ? inputField.value.trim() : 'spez';
+    const inputElement = document.querySelector('input[placeholder*="u/"]') || document.querySelector('input[type="text"]');
+    let username = inputElement ? inputElement.value.trim() : 'spez';
 
-    if (!userInput) {
-        alert("Please enter a username or text!");
-        return;
-    }
+    if (!username) username = 'spez';
+    username = username.replace(/^@?u\//, '').replace(/^@/, '');
+
+    const btn = event ? (event.target.closest('button') || event.target) : null;
+    const originalText = btn ? btn.innerHTML : '';
 
     try {
-        const response = await fetch(`http://127.0.0.1:8000/analyze-reddit?username=${encodeURIComponent(userInput)}`);
-        
-        if (!response.ok) {
-            throw new Error(`Server status: ${response.status}`);
-        }
+        if (btn) btn.innerHTML = '<i class="fa-solid fa-spinner animate-spin"></i> Fetching...';
 
-        const data = await response.json();
+        const res = await fetch(`http://127.0.0.1:8000/analyze-reddit?username=${encodeURIComponent(username)}`);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
 
-        if (data.error) {
-            alert(`Error: ${data.error}`);
+        const result = await res.json();
+
+        if (result.error) {
+            alert(result.error);
             return;
         }
 
-        let report = `=== KATAKRYPTON INTELLIGENCE REPORT ===\n`;
-        report += `Target Profile: ${data.user}\n`;
-        report += `Analyzed Items: ${data.total_analyzed}\n\n`;
-
-        data.data.forEach((item, idx) => {
-            report += `[#${idx + 1}] Subreddit: r/${item.subreddit}\n`;
-            report += `Text: "${item.comment}"\n`;
-            report += `Sentiment: ${item.sentiment} | Score: ${item.score}\n\n`;
+        // 1. Update Profile Header Handle
+        const profileHeaders = document.querySelectorAll('h3, .text-2xl, .font-bold');
+        profileHeaders.forEach(el => {
+            if (el.textContent.includes('u/') || el.textContent.includes('@')) {
+                el.textContent = `@u/${result.user}`;
+            }
         });
+
+        // 2. Format Intelligence Report
+        let report = `=== KATAKRYPTON INTELLIGENCE REPORT ===\n`;
+        report += `Target Profile: @u/${result.user}\n`;
+        report += `Analyzed Items: ${result.total_analyzed}\n\n`;
+
+        if (result.data && result.data.length > 0) {
+            result.data.forEach((item, idx) => {
+                report += `[#${idx + 1}] Subreddit: r/${item.subreddit}\n`;
+                report += `Text: "${item.comment}"\n`;
+                report += `Sentiment: ${item.sentiment} (Score: ${item.score})\n\n`;
+            });
+        }
 
         alert(report);
 
     } catch (err) {
-        console.error("Backend connection failed:", err);
-        alert("Connection Error: Make sure uvicorn is running in your VS Code terminal!");
+        console.error("Backend fetch error:", err);
+        alert("Connection Error: Ensure python3 -m uvicorn main:app --reload is running on http://127.0.0.1:8000.");
+    } finally {
+        if (btn) btn.innerHTML = originalText;
     }
 }
-        window.onload = init3D;
-    </script>
+        
 </body>
 </html>
