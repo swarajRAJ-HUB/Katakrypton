@@ -557,7 +557,46 @@
             dlAnchor.setAttribute("download", "katakrypton_payload.json");
             dlAnchor.click();
         }
+async function fetchProfileAnalysis() {
+    const inputField = document.getElementById('username-input') || document.querySelector('input[type="text"]');
+    const userInput = inputField ? inputField.value.trim() : 'spez';
 
+    if (!userInput) {
+        alert("Please enter a username or text!");
+        return;
+    }
+
+    try {
+        const response = await fetch(`http://127.0.0.1:8000/analyze-reddit?username=${encodeURIComponent(userInput)}`);
+        
+        if (!response.ok) {
+            throw new Error(`Server status: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        if (data.error) {
+            alert(`Error: ${data.error}`);
+            return;
+        }
+
+        let report = `=== KATAKRYPTON INTELLIGENCE REPORT ===\n`;
+        report += `Target Profile: ${data.user}\n`;
+        report += `Analyzed Items: ${data.total_analyzed}\n\n`;
+
+        data.data.forEach((item, idx) => {
+            report += `[#${idx + 1}] Subreddit: r/${item.subreddit}\n`;
+            report += `Text: "${item.comment}"\n`;
+            report += `Sentiment: ${item.sentiment} | Score: ${item.score}\n\n`;
+        });
+
+        alert(report);
+
+    } catch (err) {
+        console.error("Backend connection failed:", err);
+        alert("Connection Error: Make sure uvicorn is running in your VS Code terminal!");
+    }
+}
         window.onload = init3D;
     </script>
 </body>
