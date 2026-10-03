@@ -3,13 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Katakrypton | SIH 21652 Live Account Profile & OCR Intelligence</title>
+    <title>Katakrypton | SIH PS 21652 Live Account Profile & Threat Intelligence</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Three.js CDN for 3D Graphics -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <!-- Tesseract.js CDN for Client-Side OCR Engine -->
     <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -37,14 +39,40 @@
         .glow-text {
             text-shadow: 0 0 25px rgba(59, 130, 246, 0.6);
         }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(3, 7, 18, 0.8);
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(59, 130, 246, 0.3);
+            border-radius: 3px;
+        }
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #printable-report, #printable-report * {
+                visibility: visible;
+            }
+            #printable-report {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                color: #000;
+                background: #fff !important;
+            }
+        }
     </style>
 </head>
-<body class="relative min-h-screen">
+<body class="relative min-h-screen custom-scrollbar">
 
-    <!-- 3D Galaxy & Rainbow Spark WebGL Canvas -->
+    <!-- Original 3D Galaxy & Rainbow Spark WebGL Canvas -->
     <div id="webgl-container"></div>
 
-    <!-- Navigation -->
+    <!-- Navigation (Original Design) -->
     <nav class="fixed top-0 left-0 w-full z-50 glass-card border-b border-gray-800/50">
         <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
             <div class="flex items-center space-x-3">
@@ -56,19 +84,26 @@
             <div class="hidden md:flex space-x-8 text-sm font-medium text-gray-300">
                 <a href="#hero" class="hover:text-blue-400 transition-colors">Overview</a>
                 <a href="#search-section" class="hover:text-blue-400 transition-colors">Profile Search</a>
+                <a href="#network-section" class="hover:text-blue-400 transition-colors">Network Graph</a>
                 <a href="#analytics" class="hover:text-blue-400 transition-colors">Analytics Radar</a>
-                <a href="#demo" class="hover:text-blue-400 transition-colors">OCR & File Sandbox</a>
+                <a href="#demo" class="hover:text-blue-400 transition-colors">OCR Sandbox</a>
             </div>
-            <a href="#search-section" class="px-5 py-2.5 rounded-full bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold transition-all shadow-lg shadow-blue-600/30">
-                Analyze Profile
-            </a>
+            <div class="flex items-center space-x-3">
+                <button onclick="generateOfficialReport()" class="px-4 py-2.5 rounded-full bg-red-600 hover:bg-red-500 text-white text-xs font-semibold transition-all shadow-lg shadow-red-600/30 flex items-center space-x-1.5">
+                    <i class="fa-solid fa-file-pdf"></i>
+                    <span>Official Incident PDF</span>
+                </button>
+                <a href="#search-section" class="px-5 py-2.5 rounded-full bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold transition-all shadow-lg shadow-blue-600/30">
+                    Analyze Profile
+                </a>
+            </div>
         </div>
     </nav>
 
     <!-- Content Wrapper -->
     <main class="relative z-10 pt-24">
 
-        <!-- Hero Section -->
+        <!-- Hero Section (Original Design) -->
         <section id="hero" class="min-h-[75vh] flex items-center justify-center px-6">
             <div class="max-w-4xl mx-auto text-center space-y-8">
                 <div class="inline-flex items-center space-x-2 px-4 py-2 rounded-full glass-card border border-blue-500/30 text-blue-400 text-xs font-semibold tracking-wide uppercase">
@@ -80,7 +115,7 @@
                     <span class="bg-gradient-to-r from-blue-400 via-indigo-300 to-cyan-400 bg-clip-text text-transparent glow-text">Post Interaction Analytics</span>
                 </h1>
                 <p class="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto font-normal">
-                    Select target social platforms, enter handles, and run granular post-by-post sentiment analysis, comment interaction mapping, and live OCR screenshot scanning.
+                    Select target social platforms, enter handles, and run granular post-by-post sentiment analysis, comment interaction mapping, Hinglish threat lexicons, and live OCR screenshot scanning.
                 </p>
                 <div class="pt-2">
                     <a href="#search-section" class="px-8 py-4 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold shadow-xl shadow-blue-600/25 transition-all inline-block">
@@ -90,7 +125,7 @@
             </div>
         </section>
 
-        <!-- Social Platform & Account Search Bar Section -->
+        <!-- Search Bar & Cross-Platform Identity Section -->
         <section id="search-section" class="py-12 px-6 max-w-6xl mx-auto">
             <div class="glass-card p-6 md:p-8 rounded-3xl border border-gray-800 shadow-2xl">
                 <h2 class="text-2xl font-bold text-white mb-2">Analyze Social Media Account</h2>
@@ -98,7 +133,6 @@
                 
                 <!-- Input Bar -->
                 <div class="flex flex-col md:flex-row items-center gap-4">
-                    <!-- Platform Selector -->
                     <div class="w-full md:w-1/4">
                         <label class="text-[10px] font-semibold uppercase text-gray-400 tracking-wider block mb-1">Target Platform</label>
                         <select id="platform-select" class="w-full bg-gray-900 border border-gray-700 text-xs text-gray-200 rounded-xl px-4 py-3.5 outline-none focus:border-blue-500">
@@ -110,7 +144,6 @@
                         </select>
                     </div>
 
-                    <!-- Username Input -->
                     <div class="w-full md:w-2/4">
                         <label class="text-[10px] font-semibold uppercase text-gray-400 tracking-wider block mb-1">Account Handle / Username</label>
                         <div class="relative">
@@ -119,7 +152,6 @@
                         </div>
                     </div>
 
-                    <!-- Fetch Button -->
                     <div class="w-full md:w-1/4 pt-5">
                         <button onclick="fetchProfileAnalysis()" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold text-xs transition-all shadow-lg shadow-blue-600/30 flex items-center justify-center space-x-2">
                             <i class="fa-solid fa-magnifying-glass"></i>
@@ -128,9 +160,16 @@
                     </div>
                 </div>
 
-                <!-- Profile Header & Breakdown Container (Populates on Fetch) -->
+                <!-- Cross-Platform Link Matrix -->
+                <div class="mt-6 pt-4 border-t border-gray-800/80">
+                    <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">Cross-Platform Identity Matrix Linkage</p>
+                    <div id="cross-platform-matrix" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
+                        <!-- JS populated -->
+                    </div>
+                </div>
+
+                <!-- Profile Header & Breakdown Container -->
                 <div id="profile-container" class="mt-8 hidden border-t border-gray-800/80 pt-6">
-                    <!-- Target Account Header Card -->
                     <div class="flex flex-col md:flex-row items-center justify-between p-5 bg-gray-900/60 rounded-2xl border border-gray-800 gap-4 mb-6">
                         <div class="flex items-center space-x-4">
                             <div class="w-14 h-14 rounded-full bg-blue-600/20 border border-blue-500/40 flex items-center justify-center text-blue-400 font-bold text-xl" id="profile-avatar">
@@ -160,19 +199,34 @@
                         </div>
                     </div>
 
-                    <!-- Post-by-Post & Comments Analysis Section -->
                     <h3 class="text-sm font-bold text-white mb-4 flex items-center space-x-2">
                         <i class="fa-solid fa-list-check text-blue-400"></i>
-                        <span>Granular Post & Interaction Comment Analysis</span>
+                        <span>Granular Post & Interaction Comment Analysis (Hinglish/Multilingual Supported)</span>
                     </h3>
                     <div id="posts-list" class="space-y-4">
-                        <!-- Populated by JavaScript -->
+                        <!-- Populated by JS -->
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Live Analytics Radar Section -->
+        <!-- Coordinated Network Propagation Graph Section -->
+        <section id="network-section" class="py-6 px-6 max-w-6xl mx-auto">
+            <div class="glass-card p-6 md:p-8 rounded-3xl border border-gray-800 shadow-2xl">
+                <div class="flex justify-between items-center mb-4">
+                    <div>
+                        <h2 class="text-xl font-bold text-white">Coordinated Network Propagation Graph</h2>
+                        <p class="text-gray-400 text-xs mt-0.5">Interactive node map showing account interaction clusters and bot networks.</p>
+                    </div>
+                    <span class="text-xs font-mono text-blue-400 bg-blue-950/60 border border-blue-800/60 px-3 py-1 rounded-full">Interactive Canvas</span>
+                </div>
+                <div class="relative bg-gray-950/80 rounded-2xl border border-gray-800 h-[280px] overflow-hidden">
+                    <canvas id="network-canvas" class="w-full h-full cursor-grab active:cursor-grabbing"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Live Analytics Radar Section (Original Design) -->
         <section id="analytics" class="py-12 px-6 max-w-7xl mx-auto">
             <div class="text-center mb-10">
                 <h2 class="text-3xl font-bold text-white">Live Sentiment & Geospatial Threat Radar</h2>
@@ -204,7 +258,7 @@
                         </div>
                         <div>
                             <div class="flex justify-between text-xs font-semibold mb-1">
-                                <span class="text-red-400">Negative / Flagged Posts</span>
+                                <span class="text-red-400">Negative / Hinglish Threat Flagged</span>
                                 <span id="neg-percent">6%</span>
                             </div>
                             <div class="w-full h-2 bg-gray-800 rounded-full overflow-hidden">
@@ -231,6 +285,13 @@
                                 <p class="text-gray-500 text-[10px]">Pattern Repetition Engine</p>
                             </div>
                             <span id="bot-risk-tag" class="px-2 py-1 rounded bg-yellow-950 text-yellow-400 border border-yellow-800 font-mono font-bold">4.2% LOW</span>
+                        </div>
+                        <div class="p-3 bg-gray-900/60 rounded-xl border border-gray-800 flex justify-between items-center">
+                            <div>
+                                <p class="font-bold text-white">Hinglish Threat Detection</p>
+                                <p class="text-gray-500 text-[10px]">Multi-lingual Lexicon Engine</p>
+                            </div>
+                            <span id="hinglish-status-tag" class="px-2 py-1 rounded bg-emerald-950 text-emerald-400 border border-emerald-800 font-mono font-bold">ACTIVE</span>
                         </div>
                     </div>
                 </div>
@@ -260,13 +321,13 @@
             </div>
         </section>
 
-        <!-- Live Sandbox (Browser OCR & Direct File Uploads) -->
+        <!-- Live Sandbox (Browser OCR & Direct File Uploads) - Original Design with OCR Preview -->
         <section id="demo" class="py-16 px-6 max-w-6xl mx-auto">
             <div class="glass-card p-8 md:p-12 rounded-3xl border border-gray-800 shadow-2xl">
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
                     <div>
-                        <h2 class="text-2xl font-bold text-white">Live OCR Screenshot & File Sandbox</h2>
-                        <p class="text-gray-400 text-sm mt-1">Upload actual chat screenshots (WhatsApp/Telegram) or JSON file exports.</p>
+                        <h2 class="text-2xl font-bold text-white">Live OCR Screenshot Scanner & File Sandbox</h2>
+                        <p class="text-gray-400 text-sm mt-1">Upload chat screenshots (WhatsApp/Telegram) with bounding analytics or JSON export files.</p>
                     </div>
                     <div class="flex items-center space-x-3">
                         <select id="mode-select" class="bg-gray-900 border border-gray-700 text-xs text-gray-200 rounded-xl px-4 py-3 outline-none focus:border-blue-500">
@@ -281,10 +342,11 @@
                 </div>
 
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    <!-- Left: Upload View -->
+                    <!-- Left: Upload & Preview View -->
                     <div class="flex flex-col h-full space-y-4">
                         <label class="text-xs font-semibold uppercase text-gray-400 tracking-wider">Input Image or File</label>
-                        <div id="drop-zone" onclick="document.getElementById('file-input').click()" class="flex-1 border-2 border-dashed border-gray-700 hover:border-blue-500/50 rounded-2xl p-6 flex flex-col items-center justify-center text-center bg-gray-900/40 transition-all cursor-pointer min-h-[220px]">
+                        <div id="drop-zone" onclick="document.getElementById('file-input').click()" class="flex-1 border-2 border-dashed border-gray-700 hover:border-blue-500/50 rounded-2xl p-6 flex flex-col items-center justify-center text-center bg-gray-900/40 transition-all cursor-pointer min-h-[220px] relative overflow-hidden">
+                            <img id="ocr-preview-img" src="" alt="Preview" class="absolute inset-0 w-full h-full object-contain bg-gray-950/90 hidden p-2">
                             <i class="fa-solid fa-file-arrow-up text-4xl text-gray-500 mb-3" id="upload-icon"></i>
                             <p class="text-gray-300 font-medium text-sm" id="upload-text">Click to Select Chat Screenshot or JSON Data</p>
                             <p class="text-gray-500 text-xs mt-1">Supports PNG, JPG, JSON, CSV (Processed Live)</p>
@@ -323,18 +385,49 @@
 
     </main>
 
-    <!-- Complete Engine Script -->
+    <!-- Hidden Printable Report for Official Law Enforcement PDF Output -->
+    <div id="printable-report" class="hidden p-8 font-sans">
+        <div class="border-b-2 border-black pb-4 mb-6 flex justify-between items-center">
+            <div>
+                <h1 class="text-3xl font-bold uppercase tracking-wider">OFFICIAL OSINT INCIDENT REPORT</h1>
+                <p class="text-sm text-gray-600">KATAKRYPTON Intelligence Engine | SIH PS 21652</p>
+            </div>
+            <div class="text-right text-xs font-mono">
+                <p>CONFIDENTIAL / LAW ENFORCEMENT</p>
+                <p>TIMESTAMP: <span id="report-timestamp"></span></p>
+            </div>
+        </div>
+
+        <div class="space-y-6">
+            <div class="border p-4 rounded bg-gray-50">
+                <h2 class="font-bold text-lg mb-2">TARGET SUMMARY & IDENTIFICATION</h2>
+                <p><strong>Primary Target Handle:</strong> <span id="report-handle">@sih_official</span></p>
+                <p><strong>Platform:</strong> <span id="report-platform">X / Twitter</span></p>
+                <p><strong>Coordinated Bot Risk Score:</strong> <span id="report-botrisk">4.2%</span></p>
+            </div>
+
+            <div class="border p-4 rounded">
+                <h2 class="font-bold text-lg mb-2">EXTRACTED THREAT & HINGLISH FLAGS</h2>
+                <ul id="report-flags-list" class="list-disc pl-5 text-sm space-y-1">
+                    <li>Analysis complete. Hinglish + Multilingual lexicon monitoring active.</li>
+                </ul>
+            </div>
+
+            <div class="mt-8 text-xs border-t pt-4 text-center text-gray-500">
+                This document contains algorithmic threat analysis generated for Smart India Hackathon OSINT workflows.
+            </div>
+        </div>
+    </div>
+
+    <!-- Engine Script (Original 3D Engine + Integrated 5 Modifications) -->
     <script>
         let scene, camera, renderer, galaxyParticles, starField, coreMesh, rainbowSparkLine;
         let uploadedFile = null;
         let lastOutputData = null;
-        
-        // Optional Backend API bridge address. Leave null for client-side execution.
-        const currentBackendAPI = null;
 
-        // VADER-Style Sentiment Dictionary Engine
-        const positiveKeywords = ['great', 'excellent', 'love', 'amazing', 'good', 'awesome', 'best', 'supported', 'slick', 'win', 'innovative', 'looking forward', 'helpful', 'top', 'verified'];
-        const negativeKeywords = ['bad', 'fake', 'bot', 'scam', 'threat', 'suspicious', 'hack', 'attack', 'bug', 'fail', 'terrible', 'warning', 'flagged', 'illegal', 'harass', 'violence'];
+        // Expanded Hinglish + Multilingual Threat Lexicon
+        const positiveKeywords = ['great', 'excellent', 'love', 'amazing', 'good', 'awesome', 'best', 'supported', 'slick', 'win', 'innovative', 'looking forward', 'helpful', 'top', 'verified', 'sahi', 'badhiya', 'accha'];
+        const negativeKeywords = ['bad', 'fake', 'bot', 'scam', 'threat', 'suspicious', 'hack', 'attack', 'bug', 'fail', 'terrible', 'warning', 'flagged', 'illegal', 'harass', 'violence', 'dhokha', 'farzi', 'danga', 'bhadkao', 'chori', 'feku', 'rumor', 'riot'];
 
         function calculateSentiment(text) {
             const words = text.toLowerCase().match(/\b\w+\b/g) || [];
@@ -370,12 +463,93 @@
 
         function calculateBotRisk(username) {
             let risk = 2.0;
-            if (/\d{4,}$/.test(username)) risk += 35; // e.g. @user1294812
+            if (/\d{4,}$/.test(username)) risk += 35;
             if (username.length > 15) risk += 15;
-            if (/(bot|scam|crypto|airdrop|free)/i.test(username)) risk += 40;
+            if (/(bot|scam|crypto|airdrop|free|farzi)/i.test(username)) risk += 40;
             return Math.min(risk + Math.random() * 5, 99.5).toFixed(1);
         }
 
+        function renderCrossPlatformMatrix(username) {
+            const cleanHandle = username.replace('@', '');
+            const platforms = [
+                { name: 'Twitter / X', handle: `@${cleanHandle}`, threat: 'LOW' },
+                { name: 'Telegram', handle: `t.me/${cleanHandle}`, threat: 'MEDIUM' },
+                { name: 'Reddit', handle: `u/${cleanHandle}`, threat: 'LOW' },
+                { name: 'YouTube', handle: `@${cleanHandle}_official`, threat: 'LOW' }
+            ];
+
+            const container = document.getElementById('cross-platform-matrix');
+            container.innerHTML = '';
+            platforms.forEach(p => {
+                container.innerHTML += `
+                    <div class="bg-gray-900/60 p-2.5 rounded-xl border border-gray-800 text-xs">
+                        <p class="text-gray-500 text-[10px] uppercase font-bold">${p.name}</p>
+                        <p class="text-white font-mono font-semibold truncate">${p.handle}</p>
+                        <span class="inline-block mt-1 text-[9px] font-bold font-mono px-1.5 py-0.5 rounded bg-blue-950 text-blue-400 border border-blue-800">${p.threat} RISK</span>
+                    </div>
+                `;
+            });
+        }
+
+        function initNetworkGraph() {
+            const canvas = document.getElementById('network-canvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            
+            canvas.width = canvas.parentElement.clientWidth;
+            canvas.height = canvas.parentElement.clientHeight;
+
+            const nodes = [
+                { id: 'Target Profile', x: canvas.width * 0.5, y: canvas.height * 0.5, radius: 14, color: '#3b82f6' },
+                { id: '@bot_node_1', x: canvas.width * 0.25, y: canvas.height * 0.3, radius: 9, color: '#ef4444' },
+                { id: '@bot_node_2', x: canvas.width * 0.75, y: canvas.height * 0.25, radius: 9, color: '#ef4444' },
+                { id: 'Telegram Relay', x: canvas.width * 0.3, y: canvas.height * 0.75, radius: 11, color: '#eab308' },
+                { id: 'Commenter Cluster', x: canvas.width * 0.7, y: canvas.height * 0.7, radius: 11, color: '#10b981' }
+            ];
+
+            const links = [
+                { source: 0, target: 1 },
+                { source: 0, target: 2 },
+                { source: 0, target: 3 },
+                { source: 0, target: 4 },
+                { source: 1, target: 3 }
+            ];
+
+            function animateGraph() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                links.forEach(link => {
+                    const s = nodes[link.source];
+                    const t = nodes[link.target];
+                    ctx.strokeStyle = 'rgba(59, 130, 246, 0.3)';
+                    ctx.lineWidth = 1.5;
+                    ctx.beginPath();
+                    ctx.moveTo(s.x, s.y);
+                    ctx.lineTo(t.x, t.y);
+                    ctx.stroke();
+                });
+
+                nodes.forEach(node => {
+                    ctx.beginPath();
+                    ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = node.color;
+                    ctx.shadowColor = node.color;
+                    ctx.shadowBlur = 10;
+                    ctx.fill();
+                    ctx.shadowBlur = 0;
+
+                    ctx.fillStyle = '#ffffff';
+                    ctx.font = '10px system-ui';
+                    ctx.textAlign = 'center';
+                    ctx.fillText(node.id, node.x, node.y + node.radius + 12);
+                });
+
+                requestAnimationFrame(animateGraph);
+            }
+            animateGraph();
+        }
+
+        // Original Three.js 3D Background Engine
         function init3D() {
             const container = document.getElementById('webgl-container');
             scene = new THREE.Scene();
@@ -387,13 +561,11 @@
             renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
             container.appendChild(renderer.domElement);
 
-            // 1. Core Wireframe
             const coreGeo = new THREE.IcosahedronGeometry(2.0, 2);
             const coreMat = new THREE.MeshBasicMaterial({ color: 0x3b82f6, wireframe: true, transparent: true, opacity: 0.22 });
             coreMesh = new THREE.Mesh(coreGeo, coreMat);
             scene.add(coreMesh);
 
-            // 2. Galaxy Particles
             const galaxyCount = 1200;
             const galaxyGeo = new THREE.BufferGeometry();
             const galaxyPositions = new Float32Array(galaxyCount * 3);
@@ -412,7 +584,6 @@
             galaxyParticles = new THREE.Points(galaxyGeo, new THREE.PointsMaterial({ color: 0x60a5fa, size: 0.04, transparent: true, opacity: 0.65 }));
             scene.add(galaxyParticles);
 
-            // 3. Star Background
             const starCount = 1500;
             const starGeo = new THREE.BufferGeometry();
             const starPositions = new Float32Array(starCount * 3);
@@ -421,7 +592,6 @@
             starField = new THREE.Points(starGeo, new THREE.PointsMaterial({ color: 0xffffff, size: 0.02, transparent: true, opacity: 0.8 }));
             scene.add(starField);
 
-            // 4. Dynamic 3D Rainbow Spark Arc
             const sparkPoints = [];
             const sparkColors = [];
             const count = 120;
@@ -471,6 +641,8 @@
             document.getElementById('profile-platform-tag').innerText = `Platform: ${platform.toUpperCase()}`;
             document.getElementById('active-profile-tag').innerText = username;
 
+            renderCrossPlatformMatrix(username);
+
             const botRiskVal = calculateBotRisk(username);
             const riskText = botRiskVal > 50 ? "HIGH" : (botRiskVal > 20 ? "MEDIUM" : "LOW");
             const riskColor = botRiskVal > 50 ? "text-red-400" : (botRiskVal > 20 ? "text-yellow-400" : "text-emerald-400");
@@ -481,12 +653,12 @@
 
             const sampleData = [
                 {
-                    post: `Published update regarding SIH 2026 problem statement submissions and hackathon tracks. #SIH2026`,
+                    post: `Published update regarding SIH 2026 problem statement submissions. Key updates: no farzi submissions allowed! #SIH2026`,
                     time: "2 hours ago",
                     likes: "1.4K",
                     comments: [
-                        { user: "@tech_enthusiast", comment: "Great problem statements this year!" },
-                        { user: "@dev_ninja", comment: "Is Hinglish OCR supported?" }
+                        { user: "@tech_enthusiast", comment: "Badhiya updates! Looking forward." },
+                        { user: "@dev_ninja", comment: "Is Hinglish threat OCR scanning live?" }
                     ]
                 },
                 {
@@ -502,7 +674,7 @@
                     time: "3 days ago",
                     likes: "2.1K",
                     comments: [
-                        { user: "@security_bot", comment: "Flagged repetition across 14 accounts. Warning issued." }
+                        { user: "@security_bot", comment: "Flagged repetition across accounts. Warning issued." }
                     ]
                 }
             ];
@@ -563,11 +735,6 @@
             document.getElementById('neg-bar').style.width = `${negPct}%`;
 
             document.getElementById('profile-sentiment').innerText = `${posPct}% POSITIVE`;
-            
-            if (botRiskVal > 50) {
-                document.getElementById('zone-north').innerText = "HIGH";
-                document.getElementById('zone-north').className = "px-2 py-0.5 rounded bg-red-950 text-red-400 font-mono font-bold";
-            }
         }
 
         function handleFileSelect(event) {
@@ -576,6 +743,16 @@
                 uploadedFile = file;
                 document.getElementById('upload-text').innerText = `Selected: ${file.name}`;
                 document.getElementById('upload-icon').className = "fa-solid fa-file-circle-check text-4xl text-green-400 mb-3";
+
+                if (file.type.startsWith('image/')) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const img = document.getElementById('ocr-preview-img');
+                        img.src = e.target.result;
+                        img.classList.remove('hidden');
+                    };
+                    reader.readAsDataURL(file);
+                }
             }
         }
 
@@ -632,6 +809,13 @@
             }
         }
 
+        function generateOfficialReport() {
+            const handle = document.getElementById('profile-handle').innerText || "@sih_official";
+            document.getElementById('report-handle').innerText = handle;
+            document.getElementById('report-timestamp').innerText = new Date().toLocaleString();
+            window.print();
+        }
+
         function copyPayload() {
             if (lastOutputData) {
                 navigator.clipboard.writeText(JSON.stringify(lastOutputData, null, 2));
@@ -665,6 +849,8 @@
 
         window.onload = function() {
             init3D();
+            initNetworkGraph();
+            renderCrossPlatformMatrix('@sih_official');
         };
     </script>
 </body>
